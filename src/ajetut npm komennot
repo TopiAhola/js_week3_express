@@ -1,2 +1,7 @@
  nmp install express
  npm install multer
+
+ assignment 1:
+
+ npm install eslint
+ npm init @eslint/config@latest

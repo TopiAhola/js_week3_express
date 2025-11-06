@@ -13,7 +13,7 @@ const catRouter = express.Router();
 
 //multer
 import multer from "multer";
-const upload = multer({
+const uploadMulter = multer({
     dest: './uploads/'  //uploads kansio
 });
 
@@ -22,7 +22,7 @@ const upload = multer({
 
 //endpoint http://localhost:3000/api/v1/cats  console.log('http://localhost:3000/api/v1/cats .get kutsu')
 catRouter.get('/',getCat)
-    .post('/', upload.single('file'), postCat); //multer välissä
+    .post('/', uploadMulter.single('file'), postCat); //multer välissä
 
 
 catRouter.route('/:id').get(getCatById)
