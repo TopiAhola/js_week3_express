@@ -5,6 +5,11 @@ import {addCat, findCatById, listAllCats, deleteCatModel} from "../models/cat-mo
 
 
 
+// http://localhost:3000/api/v1/cat
+const getOneCat = (req, res) => {
+    res.json(findCatById(2));
+}
+
 
 const getCat = (req, res) => {
     res.json(listAllCats());
@@ -69,4 +74,4 @@ const deleteCat = (req, res) => {
 
 };
 
-export {getCat, getCatById, postCat, putCat, deleteCat};
+export {getOneCat,getCat, getCatById, postCat, putCat, deleteCat};

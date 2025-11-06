@@ -28,6 +28,10 @@ app.use(express.urlencoded({extended: true}));
 //lisää prefixin ohjaa api routerin sisällä oleville routeille ?
 app.use('/api/v1', api);
 
+//Assignment1 10.
+// kuva: http://localhost:3000/public/myimage.jpg
+app.use('/public', express.static('public'));
+
 
 //////////////////////
 
@@ -81,7 +85,7 @@ app.get('/example/middleware',
         console.log('middleware ajaa');
         next();
     },
-    (req, res, next) => {
+    (req, res) => { //no next...
         console.log('middleware ajettu');
         res.send("Middleware ajettu");
     },

@@ -2,13 +2,16 @@ import express from 'express';
 const router = express.Router();
 
 
-import catRouter from './routes/cat-router.js';
+import {catRouter, catRouterAssignment1 }from './routes/cat-router.js';
 
 
 console.log('api/index router käynnistyi');
 
 //jatkaa /api/v1 polkua...
+router.use('/cat',catRouterAssignment1);
 router.use('/cats', catRouter);
+
+
 
 
 

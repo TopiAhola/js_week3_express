@@ -1,7 +1,16 @@
- nmp install express
- npm install multer
-
  assignment 1:
 
  npm install eslint
  npm init @eslint/config@latest
+
+npm install prettier
+npm init prettier
+
+ npm init editorconfig
+
+ npm update
+
+ assignment 2 :
+  nmp install express
+  npm install multer
+
