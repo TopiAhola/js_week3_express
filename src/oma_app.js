@@ -1,6 +1,6 @@
+
 'use strict';
 import express from 'express';
-import {someFunction} from "./oma_app.js";
 
 
 const expressApp = express(); //returns an express app
@@ -19,7 +19,7 @@ expressApp.use( express.static('public'));
 
 
 //tämä ajaa jutun kaikille pyynnöille. (parsii jsonin objektiksi?)
-app.use(express.json());
+expressApp.use(express.json());
 
 
 expressApp.listen(port, hostname, () => {
@@ -28,7 +28,7 @@ expressApp.listen(port, hostname, () => {
 
 expressApp.get('/',
     (req, res) => {
-    res.send('Response text');
+        res.send('Response text');
     });
 
 expressApp.get('/api/test1', (req, res) => {
@@ -41,7 +41,7 @@ expressApp.get('/api/test2', (req, res) => {
 });
 
 expressApp.get('/api/test3', (req, res) => {
-    let someObject = someFunction(req);
+    let someObject = getCat();
     someObject.request_count += 1;
     res.json(someObject);  //palauttaa jsonin jossa lukee "asdasd : 5 "
 });
@@ -52,4 +52,25 @@ expressApp.post('/', (req, res) => {
     res.sendStatus(200);
 });
 
+function getCat() {
+    const cat1 = {
+        cat_id: 1,
+        name: 'nemi',
+        birthdate: '1.2.2022',
+        weight: '2',
+        owner: 'A',
+        image: 'https://loremflickr.com/320/240/cat'
+    }
 
+    const cat2 = {
+        cat_id: 2,
+        name: 'purre',
+        birthdate: '1.2.2023',
+        weight: '3',
+        owner: 'B',
+        image: 'https://loremflickr.com/320/240/cat'
+    }
+
+    return cat1;
+
+}
