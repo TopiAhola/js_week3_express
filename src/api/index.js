@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 
-import catRouter from './routes/cat_router.js';
+import catRouter from './routes/cat-router.js';
 
 
 console.log('api/index router käynnistyi');

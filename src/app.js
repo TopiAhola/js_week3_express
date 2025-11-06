@@ -8,26 +8,7 @@ const app = express();
 import api from './api/index.js';
 
 
-// mock-data
 
-const cats = [
-  {
-    cat_id: 2,
-    name: 'Kisu',
-    birthdate: '2023-10-08',
-    weight: 6,
-    owner: 'Hessu',
-    image: 'https://loremflickr.com/320/240/cat',
-  },
-  {
-    cat_id: 3,
-    name: 'Misu',
-    birthdate: '2021-11-18',
-    weight: 7,
-    owner: 'Hessu',
-    image: 'https://loremflickr.com/320/240/cat3',
-  },
-];
 
 // Web sivusto tarjoillaan public-kansiosta
 //app.use('/sivusto', express.static('public')); // aliosoite /sivusto
