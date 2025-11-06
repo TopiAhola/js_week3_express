@@ -25,23 +25,38 @@ const cats = [
         weight: 7,
         owner: 'Hessu',
         image: 'https://loremflickr.com/320/240/cat3'
-    },
+    }
 ];
 
 const findCatById = (id) => {
-    let returnValue = null;
-    for (let cat of cats) {
-        if ( cat.cat_id == id ){
-           returnValue = cat;
-        }
+    let foundCat = cats.find((cat) => cat.cat_id == id);
+    if (foundCat !== undefined) {
+        console.log('findCatById cat found:' + foundCat)
+        return foundCat;
+    } else {
+        console.log('findCatById cat not found');
+        return null;
     }
-    return returnValue;
+
 }
 
-const addCat = (cat) => {}
+const addCat = (cat) => {
+    cats.push(cat);
+    return cat;
+}
 
 const listAllCats = () => {
     return cats;
 }
 
-export {findCatById, addCat, listAllCats } ;
+const deleteCatModel = (id) => {
+    let targetIndex = cats.findIndex(cat => cat.cat_id === id);
+    if ( targetIndex !== -1 && targetIndex <= cats.length ){
+        cats.splice(targetIndex,1);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export {findCatById, addCat, listAllCats, deleteCatModel } ;

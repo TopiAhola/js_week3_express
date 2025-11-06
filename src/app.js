@@ -4,6 +4,7 @@ const port = 3000;
 const app = express();
 
 
+
 // ???
 import api from './api/index.js';
 
@@ -68,6 +69,29 @@ app.post('/api/v1/cats', (req, res) => {
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+
+//middleware esimerkki  http://localhost:3000/example/middleware
+app.get('/example/middleware',
+    (req, res, next) => {
+        console.log('ennen middlewarea ajaa');
+        next();
+    },
+    (req, res, next) => {
+        console.log('middleware ajaa');
+        next();
+    },
+    (req, res, next) => {
+        console.log('middleware ajettu');
+        res.send("Middleware ajettu");
+    },
+
+
+
+    );
+
+
+
 
 
 export default app;
