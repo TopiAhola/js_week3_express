@@ -29,16 +29,19 @@ const getCatById = (req, res) => {
 
 };
 
-const postCat = (req, res) => {
+//yritys käyttää bcryptiä...
+const postCat = async (req, res) => {
     console.log('postCat in cat-controller')
     console.log(req.body);
     console.log(req.file); //Multerin lisäämää paskaa
 
-    const result = addCat(req.body);
-    if (result.cat_id) {
+    const result = await addCat(req.body);
+    if (result.insertId !== false) {
+        console.log('cat-controller returns status 200');
         res.status(201);
         res.json({message: 'New cat added.', result});
     } else {
+        console.log('cat-controller returns status 400');
         res.sendStatus(400);
     }
 

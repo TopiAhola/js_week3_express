@@ -18,7 +18,17 @@ Content-Type: application/json
   "image": "https://loremflickr.com/320/240/cat"
 }
 
+### post new cat DB compatible
+POST http://localhost:3000/api/v1/cats
+Content-Type: application/json
 
+{
+  "cat_name": "New Cat",
+  "weight": 5,
+  "owner": 1,
+  "filename": "https://loremflickr.com/320/240/cat",
+  "birthdate": "2010-03-05"
+}
 
 ### post new cat with image
 POST http://127.0.0.1:3000/api/v1/cats HTTP/1.1
