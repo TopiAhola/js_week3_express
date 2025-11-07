@@ -12,8 +12,8 @@ const getOneCat = (req, res) => {
 
 
 const getCat = (req, res) => {
-    res.json(listAllCats());
     console.log('getCat in cat-controller')
+    res.json(listAllCats());
 };
 
 const getCatById = (req, res) => {
@@ -33,8 +33,6 @@ const postCat = (req, res) => {
     console.log('postCat in cat-controller')
     console.log(req.body);
     console.log(req.file); //Multerin lisäämää paskaa
-
-
 
     const result = addCat(req.body);
     if (result.cat_id) {
