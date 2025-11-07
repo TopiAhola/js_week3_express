@@ -1,6 +1,6 @@
 'use strict';
 
-import {addCat, findCatById, listAllCats, deleteCatModel} from "../models/cat-model.js";
+import {addCat, findCatById, listAllCats, removeCat} from "../models/cat-model.js";
 
 
 
@@ -63,7 +63,7 @@ const putCat = (req, res) => {
 const deleteCat = (req, res) => {
     // not implemented in this example, this is future homework
     console.log('deleteCat in cat-controller')
-    let success = deleteCatModel(req.params.id);
+    let success = removeCat(req.params.id);
     if (success) {
         res.sendStatus(200);
     } else {
