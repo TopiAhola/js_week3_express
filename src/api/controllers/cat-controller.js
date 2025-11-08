@@ -1,22 +1,41 @@
 'use strict';
 
-import {addCat, findCatById, listAllCats, deleteCatModel} from "../models/cat-model.js";
+import {addCat, findCatById, listAllCats, modifyCat, removeCat} from "../models/cat-model.js";
 
 const getCat = (req, res) => {
     console.log('getCat in cat-controller')
-    res.json(listAllCats());
+    listAllCats().then(
+        result => {
+            res.json(result);
+        },
+
+        (result) => {
+            console.log('error in listAllCats');
+            console.log(result);
+            res.sendStatus(500);
+        }
+    );
 };
 
 const getCatById = (req, res) => {
     console.log('getCatById in cat-controller')
     console.log(req.params.id);
     const cat = findCatById(req.params.id);
-    if (cat !== null) {
-        res.json(cat);
-        console.log('return cat: '+cat)
-    } else {
-        res.sendStatus(404);
-    }
+    cat.then(
+        cat => {
+            if (cat) {
+                console.log('return cat: '+cat)
+                res.json(cat);
+            } else {
+                res.sendStatus(404);
+            }
+        },
+        result => {
+            console.log('error in getCatById in cat-controller');
+            console.log(result);
+            res.sendStatus(500);
+        }
+    );
 };
 
 const postCat = (req, res) => {
@@ -25,36 +44,65 @@ const postCat = (req, res) => {
     console.log(req.file); //Multerin lisäämää paskaa
 
     const result = addCat(req.body);
-    if (result) {
-        res.status(201);
-        res.json({message: 'New cat added.', result});
-    } else {
-        res.sendStatus(400);
-    }
+    result.then(
+        result => {
+            if (result) {
+                console.log('return cat: '+result)
+                res.json(result);
+            } else {
+                res.sendStatus(404);
+            }
+        },
+        result => {
+            console.log('error in postCat in cat-controller');
+            console.log(result);
+            res.sendStatus(500);
+        }
+    );
 };
 
 const putCat = (req, res) => {
-    // not implemented in this example, this is future homework
+    //
     console.log('putCat in cat-controller')
     console.log(req.body);
-    const result = addCat(req.body);
-    if (result.cat_id) {
-        res.status(201);
-        res.json({message: 'New cat added.', result});
-    } else {
-        res.sendStatus(400);
-    }
+    const result = modifyCat(req.body,req.params.id);
+    result.then(
+        result => {
+            if (result) {
+                console.log('return cat: '+result)
+                res.json(result);
+            } else {
+                res.sendStatus(404);
+            }
+        },
+        result => {
+            console.log('error in putCat in cat-controller');
+            console.log(result);
+            res.sendStatus(500);
+        }
+    );
 };
 
 const deleteCat = (req, res) => {
-    // not implemented in this example, this is future homework
+    //
     console.log('deleteCat in cat-controller')
-    let success = deleteCatModel(req.params.id);
-    if (success) {
-        res.sendStatus(200);
-    } else {
-        res.sendStatus(404);
-    }
-};
+    let success = removeCat(req.params.id);
+    success.then(
+        success => {
+            if (success) {
+                console.log('deleteCat: deleted '+req.params.id);
+                res.sendStatus(200);
+            } else {
+                console.log('deleteCat: cat not found');
+                res.sendStatus(404);
+            }
+        },
+        success => {
+            console.log('error in deleteCat in cat-controller');
+            console.log(success);
+            res.sendStatus(500);
+        }
+    );
+}
 
 export {getCat, getCatById, postCat, putCat, deleteCat};

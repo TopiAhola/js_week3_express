@@ -6,8 +6,8 @@ GET http://localhost:3000/api/v1/cats
 ### get cats Assignment 2
 GET http://localhost:3000/api/v1/cat
 
-### get cat by id Assignment 2
-GET http://localhost:3000/api/v1/cat/99
+### get cat by id
+GET http://localhost:3000/api/v1/cat/41
 
 ### post new cat Assignment 2
 POST http://localhost:3000/api/v1/cat
@@ -20,6 +20,36 @@ Content-Type: application/json
   "owner": "Owner Name",
   "image": "https://loremflickr.com/320/240/cat"
 }
+
+### post new cat in database
+POST http://localhost:3000/api/v1/cat/
+Content-Type: application/json
+
+{
+  "cat_id": 99,
+  "cat_name": "new cat",
+  "weight": 4,
+  "owner": 37,
+  "filename": "some_filename",
+  "birthdate": "2010-03-04"
+}
+
+### update a cat in database
+PUT http://localhost:3000/api/v1/cat/41
+Content-Type: application/json
+
+{
+  "cat_id": 41,
+  "cat_name": "Siiri2",
+  "weight": 4,
+  "owner": 37,
+  "filename": "some_filename",
+  "birthdate": "2010-03-04T22"
+}
+
+### delete a cat in database
+DELETE http://localhost:3000/api/v1/cat/54
+
 
 
 ### get users Assignment 2
@@ -39,6 +69,8 @@ Content-Type: application/json
   "role": "user",
   "password": "password"
 }
+
+
 
 ### post new cat with image
 POST http://127.0.0.1:3000/api/v1/cats HTTP/1.1
