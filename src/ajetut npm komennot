@@ -23,3 +23,7 @@ Assignment 5:
 
     npm install dotenv
     npm install ? (mysql2 ) //???
+
+Assignment 6:
+    npm install bcrypt
+
