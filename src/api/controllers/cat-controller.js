@@ -1,9 +1,6 @@
 'use strict';
 
-import {addCat, findCatById, listAllCats, deleteCatModel} from "../models/cat-model.js";
-
-
-
+import {addCat, findCatById, listAllCats} from "../models/cat-model.js";
 
 
 const getCat = (req, res) => {
@@ -27,12 +24,8 @@ const getCatById = (req, res) => {
 const postCat = (req, res) => {
     console.log('postCat in cat-controller')
     console.log(req.body);
-    console.log(req.file); //Multerin lisäämää paskaa
-
-
-
     const result = addCat(req.body);
-    if (result.cat_id) {
+    if (result) {
         res.status(201);
         res.json({message: 'New cat added.', result});
     } else {
@@ -42,31 +35,19 @@ const postCat = (req, res) => {
 };
 
 const putCat = (req, res) => {
-    // not implemented in this example, this is future homework
+    // return hard coded json response: {message: 'Cat item updated.'}
     console.log('putCat in cat-controller')
-    console.log(req.body);
-    const result = addCat(req.body);
-    if (result.cat_id) {
-        res.status(201);
-        res.json({message: 'New cat added.', result});
-    } else {
-        res.sendStatus(400);
-    }
-
+   res.json(
+       {message: 'Cat item updated.'}
+   );
 };
 
 const deleteCat = (req, res) => {
-    // not implemented in this example, this is future homework
-    console.log('deleteCat in cat-controller')
-    let success = deleteCatModel(req.params.id);
-    if (success) {
-        res.sendStatus(200);
-    } else {
-        res.sendStatus(404);
-    }
-
-
-
+    // return hard coded json response: {message: 'Cat item deleted.'}
+    console.log('deleteCat in cat-controller: hard coded response')
+    res.json(
+        {message: 'Cat item deleted.'}
+    );
 };
 
 export {getCat, getCatById, postCat, putCat, deleteCat};

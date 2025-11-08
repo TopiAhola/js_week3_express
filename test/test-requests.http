@@ -1,13 +1,14 @@
 # api http test requests for VSCode rest client
 
-### get cats
-GET http://localhost:3000/api/v1/cats
 
-### get cat by id
-GET http://localhost:3000/api/v1/cats/99
+### get cats Assignment 2
+GET http://localhost:3000/api/v1/cat
 
-### post new cat
-POST http://localhost:3000/api/v1/cats
+### get cat by id Assignment 2
+GET http://localhost:3000/api/v1/cat/99
+
+### post new cat Assignment 2
+POST http://localhost:3000/api/v1/cat
 Content-Type: application/json
 
 {
@@ -18,31 +19,22 @@ Content-Type: application/json
   "image": "https://loremflickr.com/320/240/cat"
 }
 
+### get users Assignment 2
+GET http://localhost:3000/api/v1/user
 
+### get user by id Assignment 2
+GET http://localhost:3000/api/v1/user/2
 
-### post new cat with image
-POST http://127.0.0.1:3000/api/v1/cats HTTP/1.1
-Content-Type: multipart/form-data; boundary=MyBoundary
+### post new user Assignment 2
+POST http://localhost:3000/api/v1/user
+Content-Type: application/json
 
---MyBoundary
-Content-Disposition: form-data; name="cat_name"
+{
+  "user_id": 99,
+  "name": "John 99",
+  "username": "johndoe",
+  "email": "john@metropolia.fi",
+  "role": "user",
+  "password": "password"
+}
 
-Misu
---MyBoundary
-Content-Disposition: form-data; name="weight"
-
-6
---MyBoundary
-Content-Disposition: form-data; name="owner"
-
-3602
---MyBoundary
-Content-Disposition: form-data; name="birthdate"
-
-2023-10-08
---MyBoundary
-Content-Disposition: form-data; name="file"; filename="kuva.png"
-Content-Type: image/png
-
-< ./kuva.png
---MyBoundary--

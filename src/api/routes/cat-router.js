@@ -10,21 +10,14 @@ import {
 const catRouter = express.Router();
 
 
-
-//multer
-import multer from "multer";
-const uploadMulter = multer({
-    dest: './uploads/'  //uploads kansio
-});
-
-
-
-
-//endpoint http://localhost:3000/api/v1/cats  console.log('http://localhost:3000/api/v1/cats .get kutsu')
+//
+//endpoint http://localhost:3000/api/v1/cats
+//endpoint http://localhost:3000/api/v1/cat
 catRouter.get('/',getCat)
-    .post('/', uploadMulter.single('file'), postCat); //multer välissä
+    .post('/', postCat);
 
-
+//endpoint http://localhost:3000/api/v1/cats/:id
+//endpoint http://localhost:3000/api/v1/cat/:id
 catRouter.route('/:id').get(getCatById)
     .put(putCat)
     .delete(deleteCat);

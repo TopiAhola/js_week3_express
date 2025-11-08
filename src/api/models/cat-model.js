@@ -49,14 +49,4 @@ const listAllCats = () => {
     return cats;
 }
 
-const deleteCatModel = (id) => {
-    let targetIndex = cats.findIndex(cat => cat.cat_id === id);
-    if ( targetIndex !== -1 && targetIndex <= cats.length ){
-        cats.splice(targetIndex,1);
-        return true;
-    } else {
-        return false;
-    }
-}
-
-export {findCatById, addCat, listAllCats, deleteCatModel } ;
+export {findCatById, addCat, listAllCats } ;
