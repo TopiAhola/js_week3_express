@@ -14,10 +14,12 @@ assignment 2 :
     nmp install express
     npm install multer
 
+assignment 4:
+    npm install sharp
 
 
 
 Assignment 5:
 
     npm install dotenv
-    npm install ? (mysql2 ) //??? 
+    npm install ? (mysql2 ) //???

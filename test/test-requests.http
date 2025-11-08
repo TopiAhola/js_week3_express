@@ -50,8 +50,6 @@ Content-Type: application/json
 ### delete a cat in database
 DELETE http://localhost:3000/api/v1/cat/54
 
-
-
 ### get users Assignment 2
 GET http://localhost:3000/api/v1/user
 
@@ -61,6 +59,7 @@ GET http://localhost:3000/api/v1/user/2
 ### post new user Assignment 2
 POST http://localhost:3000/api/v1/user
 Content-Type: application/json
+
 {
   "user_id": 99,
   "name": "John 99",
@@ -69,8 +68,6 @@ Content-Type: application/json
   "role": "user",
   "password": "password"
 }
-
-
 
 ### post new cat with image Assignment 3
 POST http://127.0.0.1:3000/api/v1/cats HTTP/1.1
