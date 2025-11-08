@@ -21,14 +21,16 @@ app.use(express.urlencoded({extended: true}));
 //lisää prefixin ohjaa api routerin sisällä oleville routeille ?
 app.use('/api/v1', api);
 
-//Assignment1 10.
 // kuva: http://localhost:3000/public/myimage.jpg
 app.use('/public', express.static('public'));
 
 
 //////////////////////
 
-
+// http://localhost:3000/api/v1/ -polun juuri
+app.use('/api/v1', (req, res) => {
+    res.send('/api/v1 polun juuri');
+});
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
