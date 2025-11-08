@@ -1,15 +1,6 @@
 'use strict';
 
-import {addCat, findCatById, listAllCats, removeCat} from "../models/cat-model.js";
-
-
-
-
-// http://localhost:3000/api/v1/cat
-const getOneCat = (req, res) => {
-    res.json(findCatById(2));
-}
-
+import {addCat, findCatById, listAllCats, deleteCatModel} from "../models/cat-model.js";
 
 const getCat = (req, res) => {
     console.log('getCat in cat-controller')
@@ -26,7 +17,6 @@ const getCatById = (req, res) => {
     } else {
         res.sendStatus(404);
     }
-
 };
 
 const postCat = (req, res) => {
@@ -35,13 +25,12 @@ const postCat = (req, res) => {
     console.log(req.file); //Multerin lisäämää paskaa
 
     const result = addCat(req.body);
-    if (result.cat_id) {
+    if (result) {
         res.status(201);
         res.json({message: 'New cat added.', result});
     } else {
         res.sendStatus(400);
     }
-
 };
 
 const putCat = (req, res) => {
@@ -55,21 +44,17 @@ const putCat = (req, res) => {
     } else {
         res.sendStatus(400);
     }
-
 };
 
 const deleteCat = (req, res) => {
     // not implemented in this example, this is future homework
     console.log('deleteCat in cat-controller')
-    let success = removeCat(req.params.id);
+    let success = deleteCatModel(req.params.id);
     if (success) {
         res.sendStatus(200);
     } else {
         res.sendStatus(404);
     }
-
-
-
 };
 
-export {getOneCat,getCat, getCatById, postCat, putCat, deleteCat};
+export {getCat, getCatById, postCat, putCat, deleteCat};

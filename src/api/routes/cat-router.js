@@ -1,6 +1,5 @@
 import express from 'express';
 import {
-    getOneCat,
     getCat,
     getCatById,
     postCat,
@@ -9,15 +8,9 @@ import {
 } from '../controllers/cat-controller.js';
 
 const catRouter = express.Router();
-const catRouterAssignment1 = express.Router();
 
 
-//Assignment1
-//http://localhost:3000/api/v1/cat
-catRouterAssignment1.get('/', getOneCat);
 
-
-//Assignment2
 //multer
 import multer from "multer";
 const uploadMulter = multer({
@@ -25,18 +18,21 @@ const uploadMulter = multer({
 });
 
 
-//endpoint http://localhost:3000/api/v1/cats  console.log('http://localhost:3000/api/v1/cats .get kutsu')
+
+//endpoint http://localhost:3000/api/v1/cats
+//endpoint http://localhost:3000/api/v1/cat
+// console.log('http://localhost:3000/api/v1/cats .get kutsu')
 catRouter.get('/',getCat)
     .post('/', uploadMulter.single('file'), postCat); //multer välissä
 
-
+//endpoint http://localhost:3000/api/v1/cats/:id
+//endpoint http://localhost:3000/api/v1/cat/:id
 catRouter.route('/:id').get(getCatById)
     .put(putCat)
     .delete(deleteCat);
 
 
-//export default catRouter;
-export {catRouter, catRouterAssignment1}
+export default catRouter;
 
 
 

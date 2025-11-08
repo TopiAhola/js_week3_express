@@ -4,26 +4,19 @@ const port = 3000;
 const app = express();
 
 
-
-// ???
+// nimeää routerin api:ksi
 import api from './api/index.js';
-
-
-
 
 // Web sivusto tarjoillaan public-kansiosta
 //app.use('/sivusto', express.static('public')); // aliosoite /sivusto
 // tai palvelimen juuri /
 app.use(express.static('public'));
 
-
-
 // parsii json-datan http-pyynnöstä  ?
 app.use(express.json());
 
 //formdataa varten... ?
 app.use(express.urlencoded({extended: true}));
-
 
 //lisää prefixin ohjaa api routerin sisällä oleville routeille ?
 app.use('/api/v1', api);
@@ -37,7 +30,7 @@ app.use('/public', express.static('public'));
 
 // '/api'-polun juuri
 app.get('/api/v1', (req, res) => {
-  res.send('Welcome to my REST API!');
+  res.send('/api/v1 polun juuri');
 });
 
 app.get('/api/test', (request, response) => {
