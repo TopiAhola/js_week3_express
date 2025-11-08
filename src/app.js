@@ -28,10 +28,7 @@ app.use('/public', express.static('public'));
 
 //////////////////////
 
-// '/api'-polun juuri
-app.get('/api/v1', (req, res) => {
-  res.send('/api/v1 polun juuri');
-});
+
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
