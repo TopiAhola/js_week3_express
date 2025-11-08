@@ -41,9 +41,9 @@ const getCatById = (req, res) => {
 const postCat = (req, res) => {
     console.log('postCat in cat-controller')
     console.log(req.body);
-    console.log(req.file); //Multerin lisäämää paskaa
+    console.log(req.file); //Multerin lisäämä
 
-    const result = addCat(req.body);
+    const result = addCat(req.body, req.file.filename);
     result.then(
         result => {
             if (result) {

@@ -33,36 +33,6 @@ app.get('/api/v1', (req, res) => {
   res.send('/api/v1 polun juuri');
 });
 
-app.get('/api/test', (request, response) => {
-  const responseData = {vastaus: 'toimii myös näin'};
-  response.send(responseData);
-});
-
-/* poistetaan ??
-
-// Cats endpoints
-app.get('/api/v1/cats', (req, res) => {
-  res.json(cats);
-});
-*/
-
-app.get('/api/v1/cats/:id', (req, res) => {
-  //console.log('cat id', req.params.id);
-  const cat = cats.find(cat => cat.cat_id === parseInt(req.params.id));
-  if (cat) {
-    res.json(cat);
-  } else {
-    //res.sendStatus(404);
-    res.status(404).json({message: 'cat not found'});
-  }
-});
-
-app.post('/api/v1/cats', (req, res) => {
-  console.log(req.body);
-  // TODO: add posted cat to data
-  res.sendStatus(201);
-});
-
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
@@ -81,14 +51,9 @@ app.get('/example/middleware',
     (req, res) => { //no next...
         console.log('middleware ajettu');
         res.send("Middleware ajettu");
-    },
-
-
+    }
 
     );
-
-
-
 
 
 export default app;

@@ -17,11 +17,11 @@ const findCatById = async (id) => {
     return rows[0];
 };
 
-const addCat = async (cat) => {
+const addCat = async (cat, multerFileName) => {
     const {cat_name, weight, owner, filename, birthdate} = cat;
     const sql = `INSERT INTO wsk_cats (cat_name, weight, owner, filename, birthdate)
                VALUES (?, ?, ?, ?, ?)`;
-    const params = [cat_name, weight, owner, filename, birthdate];
+    const params = [cat_name, weight, owner, multerFileName, birthdate];
     const rows = await promisePool.execute(sql, params);
     console.log('rows', rows);
     if (rows[0].affectedRows === 0) {
