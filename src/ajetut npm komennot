@@ -26,4 +26,5 @@ Assignment 5:
 
 Assignment 6:
     npm install bcrypt
+    npm install jsonwebtoken
 

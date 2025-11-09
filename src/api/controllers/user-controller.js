@@ -1,5 +1,7 @@
 'use strict';
 
+import bcrypt from 'bcrypt';
+
 import {addUser, findUserById, listAllUsers, modifyUser, removeUser} from "../models/user-model.js";
 
 const getUser = (req, res) => {
@@ -41,7 +43,9 @@ const getUserById = (req, res) => {
 const postUser = (req, res) => {
     console.log('postUser in user-controller')
     console.log(req.body);
-    console.log(req.file); //Multerin lisäämä
+
+    //Bcrypt password hash
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
 
     const result = addUser(req.body);
     result.then(
