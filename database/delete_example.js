@@ -1,22 +1,20 @@
 import promisePool from './database.js';
 
-const deleteExample = async (userId) => {
+const deleteUserAndCats = async (userId) => {
     const connection = await promisePool.getConnection();
 
     try {
         await connection.beginTransaction();
 
-        await connection.execute('DELETE FROM tale1 WHERE user_id = ?;', [
-            userId,
-        ]);
+        await connection.execute(
+            'DELETE FROM wsk_cats WHERE owner = ?;',
+            [userId]
+        );
 
-        await connection.execute('DELETE FROM table2 WHERE user_id = ?;', [
-            userId,
-        ]);
-
-        const sql = connection.format('DELETE FROM Users WHERE user_id = ?', [
-            userId,
-        ]);
+        const sql = connection.format(
+            'DELETE FROM wsk_users WHERE user_id = ?',
+            [userId]
+        );
 
         const [result] = await connection.execute(sql);
 
@@ -32,13 +30,17 @@ const deleteExample = async (userId) => {
         return {
             message: 'User deleted',
         };
+
     } catch (error) {
         await connection.rollback();
         console.error('error', error.message);
         return {
             message: error.message,
         }
+
     } finally {
         connection.release();
     }
 };
+
+export { deleteUserAndCats };
