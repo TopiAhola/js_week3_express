@@ -8,6 +8,10 @@ GET http://localhost:3000/api/v1/cat
 ### get cat by id
 GET http://localhost:3000/api/v1/cat/58
 
+### get cats by owner id
+GET http://localhost:3000/api/v1/cat/owner/37
+
+
 ### update a cat in database
 PUT http://localhost:3000/api/v1/cat/41
 Content-Type: application/json

@@ -4,9 +4,8 @@ const router = express.Router();
 import catRouter from './routes/cat-router.js';
 import userRouter from './routes/user-router.js';
 
-//Assignment 2 haluaa tämän polun:
+//cat-router
 router.use('/cat', catRouter);
-router.use('/cats', catRouter);
 
 //user-router
 router.use('/user', userRouter);

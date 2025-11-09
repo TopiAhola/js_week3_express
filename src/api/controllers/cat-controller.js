@@ -1,6 +1,6 @@
 'use strict';
 
-import {addCat, findCatById, listAllCats, modifyCat, removeCat} from "../models/cat-model.js";
+import {addCat, findCatById, listAllCats, modifyCat, removeCat, findCatsByOwner} from "../models/cat-model.js";
 
 const getCat = (req, res) => {
     console.log('getCat in cat-controller')
@@ -105,4 +105,26 @@ const deleteCat = (req, res) => {
     );
 }
 
-export {getCat, getCatById, postCat, putCat, deleteCat};
+const getCatsByOwner = (req, res) => {
+    console.log('getCatsByOwner in cat-controller')
+    console.log(req.params.id);
+    const cats = findCatsByOwner(req.params.id);
+    cats.then(
+        cats => {
+            if (cats) {
+                console.log('return cats: '+cats)
+                res.json(cats);
+            } else {
+                res.sendStatus(404);
+            }
+        },
+        result => {
+            console.log('error in getCatsByOwner in cat-controller');
+            console.log(result);
+            res.sendStatus(500);
+        }
+    );
+};
+
+
+export {getCat, getCatById, postCat, putCat, deleteCat, getCatsByOwner};
