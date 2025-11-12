@@ -16,13 +16,14 @@ const multerUpload = multer({
 
 //createThumbnail
 import {authenticateToken, createThumbnail} from '../../middlewares.js';
+import cors from "cors";
+import authRouter from "./auth-router.js";
 
 
 const catRouter = express.Router();
 
-
 //endpoint http://localhost:3000/api/v1/cat
-catRouter.get('/',getCat)
+catRouter.get('/', getCat)
     .post('/',
         multerUpload.single('file'),
         createThumbnail,

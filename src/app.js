@@ -1,4 +1,7 @@
 import express from 'express';
+import cors from 'cors';
+
+
 const hostname = '127.0.0.1';
 const port = 3000;
 const app = express();
@@ -6,6 +9,23 @@ const app = express();
 
 // nimeää routerin api:ksi
 import api from './api/index.js';
+
+
+/*
+//Assignment 6 cors
+const corsOptions = {
+    origin: [
+        'https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css',
+        "https://cdnjs.cloudflare.com/ajax/libs/luxon/2.0.2/luxon.min.js",
+    ]
+}
+const corsWithOptions = cors(corsOptions);
+app.use(corsWithOptions);
+
+*/
+
+
+app.use(cors());
 
 // Web sivusto tarjoillaan public-kansiosta
 //app.use('/sivusto', express.static('public')); // aliosoite /sivusto
@@ -25,7 +45,6 @@ app.use('/api/v1', api);
 app.use('/public', express.static('public'));
 
 
-
 //////////////////////
 
 // http://localhost:3000/api/v1/ -polun juuri
@@ -37,27 +56,6 @@ app.use('/api/v1', (req, res) => {
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-
-
-///////////////////////
-
-//middleware esimerkki  http://localhost:3000/example/middleware
-app.get('/example/middleware',
-    (req, res, next) => {
-        console.log('ennen middlewarea ajaa');
-        next();
-    },
-    (req, res, next) => {
-        console.log('middleware ajaa');
-        next();
-    },
-    (req, res) => { //no next...
-        console.log('middleware ajettu');
-        res.send("Middleware ajettu");
-    }
-
-    );
 
 
 export default app;

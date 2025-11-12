@@ -75,11 +75,11 @@ POST http://localhost:3000/api/v1/user
 Content-Type: application/json
 
 {
-  "name": "John admin",
+  "name": "John cors",
   "username": "johndoe",
   "email": "john@metropolia.fi",
   "role": "admin",
-  "password": "admin"
+  "password": "password"
 }
 
 ### update a user in database

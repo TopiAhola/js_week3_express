@@ -5,6 +5,7 @@ import catRouter from './routes/cat-router.js';
 import userRouter from './routes/user-router.js';
 import authRouter from './routes/auth-router.js';
 
+
 //cat-router
 router.use('/cat', catRouter);
 

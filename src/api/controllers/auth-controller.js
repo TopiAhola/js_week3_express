@@ -6,50 +6,57 @@ import jwt from "jsonwebtoken";
 const login = (req, res) => {
     console.log('login in login-controller')
     console.log('user name: '+req.body.name);
-    const user = findUserByUsername(req.body.name);
-    user.then(
-        user => {
-            if (user) {
-                console.log('user found in auth-controller-login: '+user)
 
-                if (bcrypt.compareSync(req.body.password, user.password)) {
-                    console.log('password correct');
+    if(req.body.name !== undefined) {
+        const user = findUserByUsername(req.body.name);
+        user.then(
+            user => {
+                if (user) {
+                    console.log('user found in auth-controller-login: ' + user)
 
-                    //create token
-                    const userWithNoPassword = {
-                        user_id: user.user_id,
-                        name: user.name,
-                        username: user.username,
-                        email: user.email,
-                        role: user.role,
-                    };
+                    if (bcrypt.compareSync(req.body.password, user.password)) {
+                        console.log('password correct');
 
-                    const token = jwt.sign(userWithNoPassword, process.env.JWT_SECRET, {
-                        expiresIn: '24h',
-                    });
+                        //create token
+                        const userWithNoPassword = {
+                            user_id: user.user_id,
+                            name: user.name,
+                            username: user.username,
+                            email: user.email,
+                            role: user.role,
+                        };
 
-                    res.json({user: userWithNoPassword, token});
+                        const token = jwt.sign(userWithNoPassword, process.env.JWT_SECRET, {
+                            expiresIn: '24h',
+                        });
+
+                        res.json({user: userWithNoPassword, token});
+
+
+                    } else {
+                        console.log('password incorrect');
+                        res.sendStatus(401);
+                    }
+
+                    res.json();
 
 
                 } else {
-                    console.log('password incorrect');
                     res.sendStatus(401);
                 }
-
-                res.json();
-
-
-            } else {
-                res.sendStatus(401);
+            },
+            error => {
+                console.log('error in login in auth-controller');
+                console.log(error);
+                res.sendStatus(500);
             }
-        },
-        error => {
-            console.log('error in login in auth-controller');
-            console.log(error);
-            res.sendStatus(500);
-        }
-    );
-};
+        );
+
+    } else {
+        console.log('undefined input in login-controller');
+        res.sendStatus(404);
+    }
+}
 
 const getMe = async (req, res) => {
     console.log('getMe', res.locals.user);
