@@ -41,7 +41,7 @@ const getUserById = (req, res) => {
 };
 
 const postUser = (req, res) => {
-    console.log('postUser in user-controller')
+    console.log('postUser in user-controller');
     console.log(req.body);
 
     //Bcrypt password hash
@@ -66,10 +66,13 @@ const postUser = (req, res) => {
 };
 
 const putUser = (req, res) => {
-    //
-    console.log('putUser in user-controller')
+    console.log('putUser in user-controller');
+    console.log('user authorized:' +res.locals.user);
     console.log(req.body);
-    const result = modifyUser(req.body,req.params.id);
+    console.log(req.params.id);
+
+
+    const result = modifyUser(req.body, req.params.id, res.locals.user);
     result.then(
         result => {
             if (result) {
@@ -88,22 +91,24 @@ const putUser = (req, res) => {
 };
 
 const deleteUser = (req, res) => {
-    //
-    console.log('deleteUser in user-controller')
-    let success = removeUser(req.params.id);
-    success.then(
-        success => {
-            if (success) {
-                console.log('deleteUser: deleted '+req.params.id);
+    console.log('deleteUser in user-controller');
+    console.log(req.params.id);
+    console.log(res.locals.user);
+
+    let message = removeUser(req.params.id, res.locals.user);
+    message.then(
+        message => {
+            if (message) {
+                console.log(message);
                 res.sendStatus(200);
             } else {
                 console.log('deleteUser: user not found');
                 res.sendStatus(404);
             }
         },
-        success => {
+        message => {
             console.log('error in deleteUser in user-controller');
-            console.log(success);
+            console.log(message);
             res.sendStatus(500);
         }
     );

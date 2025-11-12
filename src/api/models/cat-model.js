@@ -7,7 +7,7 @@ const listAllCats = async () => {
     console.log('rows', rows);
 
     return rows;
-};
+}
 
 const findCatById = async (id) => {
     const [rows] = await promisePool.execute('SELECT wsk_cats.*, wsk_users.name AS "owner_name" FROM wsk_cats  LEFT JOIN wsk_users ON user_id = wsk_cats.owner WHERE cat_id = ?;', [id]);
@@ -16,7 +16,7 @@ const findCatById = async (id) => {
         return false;
     }
     return rows[0];
-};
+}
 
 const addCat = async (cat, multerFileName) => {
     const {cat_name, weight, owner, filename, birthdate} = cat;
@@ -29,38 +29,77 @@ const addCat = async (cat, multerFileName) => {
         return false;
     }
     return {cat_id: rows[0].insertId};
-};
-
-const modifyCat = async (cat, id) => {
-    const sql = promisePool.format(`UPDATE wsk_cats SET ? WHERE cat_id = ?`, [cat, id]);
-    const rows = await promisePool.execute(sql);
-    console.log('rows', rows);
-    if (rows[0].affectedRows === 0) {
-        return false;
-    }
-    return {message: 'success'};
-};
-
-const removeCat = async (id) => {
-    const [rows] = await promisePool.execute('DELETE FROM wsk_cats WHERE cat_id = ?', [id]);
-    console.log('rows', rows);
-    if (rows.affectedRows === 0) {
-        return false;
-    }
-    return {message: 'success'};
-};
-
-const findCatsByOwner = async (id) => {
-    const [rows] = await promisePool.execute(
-        'SELECT wsk_cats.*, wsk_users.name AS "owner_name" FROM wsk_cats LEFT JOIN wsk_users ON user_id = wsk_cats.owner WHERE wsk_cats.owner = ?;'
-        , [id]
-    );
-
-    console.log('rows', rows);
-    if (rows.length === 0) {
-        return false;
-    }
-    return rows;
 }
+
+const modifyCat = async (cat, user) => {
+    let authorized = false;
+    if(user.role !== 'admin') {
+        const ownerCheck = promisePool.format('SELECT owner FROM wsk_cats WHERE cat_id = ?', [cat.cat_id]);
+        const owner = await promisePool.execute(ownerCheck);
+        if(owner === user.user_id){
+            console.log('authorized: '+owner);
+            authorized = true;
+        };
+    } else if (user.role === 'admin') {
+        console.log('admin modifyCat')
+        authorized = true
+    }
+
+    if(authorized) {
+        console.log(user+' authorized in modifyCat');
+        const sql = promisePool.format(`UPDATE wsk_cats
+                                        SET ?
+                                        WHERE cat_id = ?`, [cat, cat.cat_id]);
+        const rows = await promisePool.execute(sql);
+        console.log('rows', rows);
+        if (rows[0].affectedRows === 0) {
+            return false;
+        }
+        return {message: 'success'};
+
+    } else {
+        console.log('user_id != owner in modifyCat');
+        return false;
+    }
+}
+
+const removeCat = async (id, user) => {
+    let authorized = false;
+    if(user.role !== 'admin') {
+        const ownerCheck = promisePool.format('SELECT owner FROM wsk_cats WHERE cat_id = ?', [cat.cat_id]);
+        const owner = await promisePool.execute(ownerCheck);
+        authorized = (owner === user.user_id);
+    } else if (user.role === 'admin') {
+        authorized = true
+    }
+
+    if (authorized) {
+
+        const [rows] = await promisePool.execute('DELETE FROM wsk_cats WHERE cat_id = ?', [id]);
+        console.log('rows', rows);
+        if (rows.affectedRows === 0) {
+            return false;
+        }
+        return {message: 'success'};
+    } else {
+        return false;
+    }
+}
+
+    const findCatsByOwner = async (id) => {
+        const [rows] = await promisePool.execute(
+            'SELECT wsk_cats.*, wsk_users.name AS "owner_name" FROM wsk_cats LEFT JOIN wsk_users ON user_id = wsk_cats.owner WHERE wsk_cats.owner = ?;'
+            , [id]
+        );
+
+        console.log('rows', rows);
+        if (rows.length === 0) {
+            return false;
+        }
+        return rows;
+    }
+
+
+
 
 export {listAllCats, findCatById, addCat, modifyCat, removeCat, findCatsByOwner};

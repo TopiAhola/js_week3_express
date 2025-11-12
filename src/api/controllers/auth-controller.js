@@ -1,27 +1,64 @@
-import {getPassword} from "../models/auth-model.js";
+import {findUserByUsername} from "../models/user-model.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 
 const login = (req, res) => {
     console.log('login in login-controller')
-    console.log('user id: '+req.body.user_id);
-    const password = getPassword(req.body.user_id);
-    password.then(
-        password => {
-            if (password) {
-                console.log('return user: '+user)
-                res.json(user);
+    console.log('user name: '+req.body.name);
+    const user = findUserByUsername(req.body.name);
+    user.then(
+        user => {
+            if (user) {
+                console.log('user found in auth-controller-login: '+user)
+
+                if (bcrypt.compareSync(req.body.password, user.password)) {
+                    console.log('password correct');
+
+                    //create token
+                    const userWithNoPassword = {
+                        user_id: user.user_id,
+                        name: user.name,
+                        username: user.username,
+                        email: user.email,
+                        role: user.role,
+                    };
+
+                    const token = jwt.sign(userWithNoPassword, process.env.JWT_SECRET, {
+                        expiresIn: '24h',
+                    });
+
+                    res.json({user: userWithNoPassword, token});
+
+
+                } else {
+                    console.log('password incorrect');
+                    res.sendStatus(401);
+                }
+
+                res.json();
 
 
             } else {
                 res.sendStatus(401);
             }
         },
-        result => {
+        error => {
             console.log('error in login in auth-controller');
-            console.log(result);
+            console.log(error);
             res.sendStatus(500);
         }
     );
 };
 
-export {login };
+const getMe = async (req, res) => {
+    console.log('getMe', res.locals.user);
+    if ( res.locals.user) {
+        res.json({message: 'token ok', user:  res.locals.user});
+    } else {
+        res.sendStatus(401);
+    }
+};
+
+
+export {login, getMe };

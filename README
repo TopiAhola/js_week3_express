@@ -1,0 +1,13 @@
+
+
+## Authentication
+
+//endpoint http://localhost:3000/api/v1/cat/:id
+.put(authenticateToken,putCat)
+.delete(authenticateToken,deleteCat);
+
+//endpoint http://localhost:3000/api/v1/user/:id
+userRouter.route('/:id')
+    .get(authenticateToken, getUserById)
+    .put(authenticateToken, putUser)
+    .delete(authenticateToken, deleteUser);

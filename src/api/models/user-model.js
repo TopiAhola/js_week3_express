@@ -57,56 +57,78 @@ const addUser = async (user) => {
     return {user_id: rows[0].insertId};
 };
 
-const modifyUser = async (user, id) => {
-    const sql = promisePool.format(`UPDATE wsk_users SET ? WHERE user_id = ?`, [user, id]);
-    const rows = await promisePool.execute(sql);
+const modifyUser = async (user, userId, authorized_user) => {
+    if(authorized_user.user_id == userId || authorized_user.role === 'admin') {
+        const sql = promisePool.format(`UPDATE wsk_users
+                                        SET ?
+                                        WHERE user_id = ?`, [user, userId]);
+        const rows = await promisePool.execute(sql);
+        console.log('rows', rows);
+        if (rows[0].affectedRows === 0) {
+            return false;
+        }
+        return {message: 'success'};
+    }
+};
+
+const removeUser = async (userId, authorized_user) => {
+
+    if((authorized_user.user_id == userId) || (authorized_user.role === 'admin')) {
+        console.log('try removing user'+userId+'from database');
+        const connection = await promisePool.getConnection();
+        try {
+            await connection.beginTransaction();
+
+            await connection.execute(
+                'DELETE FROM wsk_cats WHERE owner = ?;',
+                [userId]
+            );
+
+            const sql = connection.format(
+                'DELETE FROM wsk_users WHERE user_id = ?',
+                [userId]
+            );
+
+            const [result] = await connection.execute(sql);
+
+            if (result.affectedRows === 0) {
+                return {
+                    message: 'User not deleted'
+                };
+            }
+
+            // if no errors commit transaction
+            await connection.commit();
+
+            return {
+                message: 'User deleted',
+            };
+
+        } catch (error) {
+            await connection.rollback();
+            console.error('error', error.message);
+            return {
+                message: error.message,
+            }
+
+        } finally {
+            connection.release();
+        }
+    } else {
+        return {
+            message: 'No authorization to delete'
+        };
+    }
+};
+
+const findUserByUsername = async (name) => {
+    const [rows] = await promisePool.execute('SELECT * FROM wsk_users WHERE name = ?', [name]);
     console.log('rows', rows);
-    if (rows[0].affectedRows === 0) {
+    if (rows.length === 0) {
         return false;
     }
-    return {message: 'success'};
-};
+    return rows[0];
 
-const removeUser = async (userId) => {
-    const connection = await promisePool.getConnection();
-    try {
-        await connection.beginTransaction();
+}
 
-        await connection.execute(
-            'DELETE FROM wsk_cats WHERE owner = ?;',
-            [userId]
-        );
-
-        const sql = connection.format(
-            'DELETE FROM wsk_users WHERE user_id = ?',
-            [userId]
-        );
-
-        const [result] = await connection.execute(sql);
-
-        if (result.affectedRows === 0) {
-            return {
-                message: 'User not deleted'
-            };
-        }
-
-        // if no errors commit transaction
-        await connection.commit();
-
-        return {
-            message: 'User deleted',
-        };
-
-    } catch (error) {
-        await connection.rollback();
-        console.error('error', error.message);
-        return {
-            message: error.message,
-        }
-
-    } finally {
-        connection.release();
-    }
-};
-
-export {listAllUsers, findUserById, addUser, modifyUser, removeUser};
+export {listAllUsers, findUserById, addUser, modifyUser, removeUser, findUserByUsername};

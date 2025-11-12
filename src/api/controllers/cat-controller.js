@@ -1,6 +1,7 @@
 'use strict';
 
 import {addCat, findCatById, listAllCats, modifyCat, removeCat, findCatsByOwner} from "../models/cat-model.js";
+import {authenticateToken} from "../../middlewares.js";
 
 const getCat = (req, res) => {
     console.log('getCat in cat-controller')
@@ -64,29 +65,34 @@ const postCat = (req, res) => {
 const putCat = (req, res) => {
     //
     console.log('putCat in cat-controller')
+    console.log(res.locals.user);
     console.log(req.body);
-    const result = modifyCat(req.body,req.params.id);
-    result.then(
-        result => {
-            if (result) {
-                console.log('return cat: '+result)
-                res.json(result);
-            } else {
-                res.sendStatus(404);
+
+        const result = modifyCat(req.body,res.locals.user);
+        result.then(
+            result => {
+                if (result) {
+                    console.log('return cat: ' + result)
+                    res.json(result);
+                } else {
+                    res.sendStatus(404);
+                }
+            },
+            result => {
+                console.log('error in putCat in cat-controller');
+                console.log(result);
+                res.sendStatus(500);
             }
-        },
-        result => {
-            console.log('error in putCat in cat-controller');
-            console.log(result);
-            res.sendStatus(500);
-        }
-    );
+        );
+
 };
 
 const deleteCat = (req, res) => {
-    //
     console.log('deleteCat in cat-controller')
-    let success = removeCat(req.params.id);
+    console.log(res.locals.user);
+    console.log(req.params.id);
+
+    let success = removeCat(req.params.id,res.locals.user);
     success.then(
         success => {
             if (success) {

@@ -2,34 +2,36 @@
 
 # Cat requests
 
-### get cats Assignment 5
+### get all cats
 GET http://localhost:3000/api/v1/cat
 
 ### get cat by id
-GET http://localhost:3000/api/v1/cat/58
+GET http://localhost:3000/api/v1/cat/67
 
 ### get cats by owner id
-GET http://localhost:3000/api/v1/cat/owner/37
-
+GET http://localhost:3000/api/v1/cat/owner/44
 
 ### update a cat in database
 PUT http://localhost:3000/api/v1/cat/41
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NSwibmFtZSI6IkpvaG4gYWRtaW4iLCJ1c2VybmFtZSI6ImpvaG5kb2UiLCJlbWFpbCI6ImpvaG5AbWV0cm9wb2xpYS5maSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2Mjk3MDU2MSwiZXhwIjoxNzYzMDU2OTYxfQ.WT15cZ19OoceLeoN_IMMXDJtUyd8006_UGCyMO_9rcQ
 
 {
-  "cat_id": 41,
-  "cat_name": "Siiri2",
+  "cat_id": 67,
+  "cat_name": "Siiri3",
   "weight": 4,
-  "owner": 39,
+  "owner": 44,
   "filename": "some_filename",
   "birthdate": "2010-03-04T22"
 }
 
 ### delete a cat in database
 DELETE http://localhost:3000/api/v1/cat/54
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NCwibmFtZSI6IkpvaG4gNSIsInVzZXJuYW1lIjoiam9obmRvZSIsImVtYWlsIjoiam9obkBtZXRyb3BvbGlhLmZpIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjI5NDk1NzAsImV4cCI6MTc2MzAzNTk3MH0.sl5PNZwKy_VV5tzc2gzstdCOEq0VF0OQ-YWoUC5h35w
+
 
 ### post new cat with image
-POST http://127.0.0.1:3000/api/v1/cats HTTP/1.1
+POST http://127.0.0.1:3000/api/v1/cat HTTP/1.1
 Content-Type: multipart/form-data; boundary=MyBoundary
 
 --MyBoundary
@@ -39,7 +41,7 @@ Content-Disposition: form-data; name="cat_id"
 --MyBoundary
 Content-Disposition: form-data; name="cat_name"
 
-Misu y
+Misu 55
 --MyBoundary
 Content-Disposition: form-data; name="weight"
 
@@ -47,7 +49,7 @@ Content-Disposition: form-data; name="weight"
 --MyBoundary
 Content-Disposition: form-data; name="owner"
 
-40
+44
 --MyBoundary
 Content-Disposition: form-data; name="birthdate"
 
@@ -66,41 +68,68 @@ Content-Type: image/png
 GET http://localhost:3000/api/v1/user
 
 ### get user by id
-GET http://localhost:3000/api/v1/user/41
+GET http://localhost:3000/api/v1/user/44
 
 ### post new user
 POST http://localhost:3000/api/v1/user
 Content-Type: application/json
 
 {
-  "name": "John y",
+  "name": "John admin",
   "username": "johndoe",
   "email": "john@metropolia.fi",
-  "role": "user",
-  "password": "passwordxxx"
+  "role": "admin",
+  "password": "admin"
 }
 
 ### update a user in database
-PUT http://localhost:3000/api/v1/user/39
+PUT http://localhost:3000/api/v1/user/43
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NSwibmFtZSI6IkpvaG4gYWRtaW4iLCJ1c2VybmFtZSI6ImpvaG5kb2UiLCJlbWFpbCI6ImpvaG5AbWV0cm9wb2xpYS5maSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2Mjk3MDU2MSwiZXhwIjoxNzYzMDU2OTYxfQ.WT15cZ19OoceLeoN_IMMXDJtUyd8006_UGCyMO_9rcQ
 
 {
-  "name": "John xx",
+  "name": "John 43x",
   "username": "johndoe",
   "email": "john@metropolia.fi",
   "role": "user",
-  "password": "password"
+  "password": "passwordx"
 }
 
 ### delete a user in database
-DELETE http://localhost:3000/api/v1/user/40
+DELETE http://localhost:3000/api/v1/user/44
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NCwibmFtZSI6IkpvaG4gNSIsInVzZXJuYW1lIjoiam9obmRvZSIsImVtYWlsIjoiam9obkBtZXRyb3BvbGlhLmZpIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjI5NDk1NzAsImV4cCI6MTc2MzAzNTk3MH0.sl5PNZwKy_VV5tzc2gzstdCOEq0VF0OQ-YWoUC5h35w
+
 
 # ###########################################################
 # Auth requests
 
 ### login
 POST http://localhost:3000/api/v1/auth/login
+content-type: application/json
 
 {
-
+"name": "John xx",
+"password": "password"
 }
+
+### Get my user info
+GET http://localhost:3000/api/v1/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MywibmFtZSI6IkpvaG4gMiIsInVzZXJuYW1lIjoiam9obmRvZSIsImVtYWlsIjoiam9obkBtZXRyb3BvbGlhLmZpIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjI5NDgyMzUsImV4cCI6MTc2MzAzNDYzNX0.yYKqnQkBBHb_i5HhVGvpgHki4_7FWiO6_Tk72jmmbH8
+
+
+# ####################3
+# testing
+
+### post new user user id = 44
+POST http://localhost:3000/api/v1/user
+Content-Type: application/json
+
+{
+  "name": "John 5",
+  "username": "johndoe",
+  "email": "john@metropolia.fi",
+  "role": "user",
+  "password": "555"
+}
+
+### eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NCwibmFtZSI6IkpvaG4gNSIsInVzZXJuYW1lIjoiam9obmRvZSIsImVtYWlsIjoiam9obkBtZXRyb3BvbGlhLmZpIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjI5NDg1NDIsImV4cCI6MTc2MzAzNDk0Mn0.YGQ4jU29RVh6hKHcIwsZJXx-zV2DaxBagcMFJW6rkWQ

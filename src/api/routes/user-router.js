@@ -6,6 +6,7 @@ import {
     putUser,
     deleteUser,
 } from '../controllers/user-controller.js';
+import {authenticateToken} from "../../middlewares.js";
 
 const userRouter = express.Router();
 
@@ -18,9 +19,10 @@ userRouter.get('/',getUser)
 
 //endpoint http://localhost:3000/api/v1/users/:id
 //endpoint http://localhost:3000/api/v1/user/:id
-userRouter.route('/:id').get(getUserById)
-    .put(putUser)
-    .delete(deleteUser);
+userRouter.route('/:id')
+    .get(authenticateToken, getUserById)
+    .put(authenticateToken, putUser)
+    .delete(authenticateToken, deleteUser);
 
 
 export default userRouter;

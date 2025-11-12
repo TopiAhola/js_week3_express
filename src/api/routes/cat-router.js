@@ -15,7 +15,7 @@ const multerUpload = multer({
 });
 
 //createThumbnail
-import { createThumbnail } from '../../middlewares.js';
+import {authenticateToken, createThumbnail} from '../../middlewares.js';
 
 
 const catRouter = express.Router();
@@ -32,8 +32,8 @@ catRouter.get('/',getCat)
 
 //endpoint http://localhost:3000/api/v1/cat/:id
 catRouter.route('/:id').get(getCatById)
-    .put(putCat)
-    .delete(deleteCat);
+    .put(authenticateToken,putCat)
+    .delete(authenticateToken,deleteCat);
 
 
 catRouter.route('/owner/:id').get(getCatsByOwner);
