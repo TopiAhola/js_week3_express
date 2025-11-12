@@ -8,6 +8,7 @@ import authRouter from './routes/auth-router.js';
 
 //cat-router
 router.use('/cat', catRouter);
+router.use('/cats', catRouter);
 
 //user-router
 router.use('/user', userRouter);

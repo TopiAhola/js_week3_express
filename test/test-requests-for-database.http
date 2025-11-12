@@ -76,7 +76,7 @@ Content-Type: application/json
 
 {
   "name": "John cors",
-  "username": "johndoe",
+  "username": "john cors",
   "email": "john@metropolia.fi",
   "role": "admin",
   "password": "password"

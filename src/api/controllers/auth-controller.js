@@ -5,10 +5,10 @@ import jwt from "jsonwebtoken";
 
 const login = (req, res) => {
     console.log('login in login-controller')
-    console.log('user name: '+req.body.name);
+    console.log('user name: '+req.body.username);
 
-    if(req.body.name !== undefined) {
-        const user = findUserByUsername(req.body.name);
+    if(req.body.username !== undefined) {
+        const user = findUserByUsername(req.body.username);
         user.then(
             user => {
                 if (user) {

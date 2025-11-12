@@ -23,6 +23,7 @@ import authRouter from "./auth-router.js";
 const catRouter = express.Router();
 
 //endpoint http://localhost:3000/api/v1/cat
+//endpoint http://localhost:3000/api/v1/cats
 catRouter.get('/', getCat)
     .post('/',
         multerUpload.single('file'),

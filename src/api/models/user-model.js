@@ -121,8 +121,8 @@ const removeUser = async (userId, authorized_user) => {
     }
 };
 
-const findUserByUsername = async (name) => {
-    const [rows] = await promisePool.execute('SELECT * FROM wsk_users WHERE name = ?', [name]);
+const findUserByUsername = async (username) => {
+    const [rows] = await promisePool.execute('SELECT * FROM wsk_users WHERE username = ?', [username]);
     console.log('rows', rows);
     if (rows.length === 0) {
         return false;
